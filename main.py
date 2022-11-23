@@ -1,7 +1,6 @@
 import glob
 import customtkinter
 import threading
-import pkgutil
 
 from tkinter import messagebox, filedialog
 from PIL import Image
