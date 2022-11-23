@@ -1,6 +1,7 @@
 import glob
 import customtkinter
 import threading
+import pkgutil
 
 from tkinter import messagebox, filedialog
 from PIL import Image
@@ -21,7 +22,6 @@ class App(customtkinter.CTk):
         self.geometry(f"{App.WIDTH}x{App.HEIGHT}")
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.resizable(False, False)
-        self.iconbitmap("icon.ico")
 
         self.button_folder = customtkinter.CTkButton(
             master=self,
