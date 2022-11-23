@@ -76,6 +76,7 @@ class App(customtkinter.CTk):
                 name, suffix = i.split("@")
                 sd_image.save(f"{name}.png")
                 self.progressbar.set(round(n))
+            messagebox.showinfo("HD2SD", "Conversion Complete!")
         else:
             pass
 
