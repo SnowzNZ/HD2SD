@@ -6,7 +6,7 @@ from tkinter import messagebox, filedialog
 from PIL import Image
 
 customtkinter.set_appearance_mode("System")
-customtkinter.set_default_color_theme("dark-blue")
+customtkinter.set_default_color_theme("blue")
 
 
 class App(customtkinter.CTk):
@@ -45,7 +45,7 @@ class App(customtkinter.CTk):
             height=30,
             border_width=0,
             corner_radius=30,
-            text="Convert HD to SD",
+            text="Convert!",
             command=self.start_convert,
         )
         self.button_convert.place(relx=0.5, rely=0.62, anchor=customtkinter.CENTER)
@@ -68,13 +68,18 @@ class App(customtkinter.CTk):
             hd_images = glob.glob(rf"{filename}/*@2x.png")
 
             for i in hd_images:
-                n += 0.1
+                n += 1
+                progress = n / len(hd_images)
                 hd_image = Image.open(i)
                 x, y = hd_image.size
-                sd_image = hd_image.resize((x // 2, y // 2))
+                if x >= 2 and y >= 2:
+                    size = (x // 2, y // 2)
+                else:
+                    size = (x, y)
+                hd_image = hd_image.resize(size, Image.Resampling.LANCZOS)
                 name, suffix = i.split("@")
-                sd_image.save(f"{name}.png")
-                self.progressbar.set(round(n))
+                hd_image.save(f"{name}.png")
+                self.progressbar.set(progress)
             messagebox.showinfo("HD2SD", "Conversion Complete!")
         else:
             pass
@@ -88,6 +93,7 @@ class App(customtkinter.CTk):
         )
         self.entry.configure(state="disabled")
         self.button_folder.configure(text="Change Skin Folder")
+        self.progressbar.set(0)
 
     def on_closing(self, event=0):
         self.destroy()
