@@ -16,7 +16,11 @@ I am not responsible for any damage caused to your skins by this program. This c
 
 - Building from source
 
-    - Download ZIP and extract it or `git clone https://github.com/SnowzNZ/HD2SD`
-    - `cd HD2SD`
-    - `pip install -r requirements.txt`
-    - `pyinstaller --noconfirm --onefile --windowed --add-data "%localappdata%/Programs/Python/Python311/Lib/site-packages/customtkinter;customtkinter/"  "main.py"`
+    - Download ZIP and extract it or
+
+    ```sh
+    git clone https://github.com/SnowzNZ/HD2SD
+    cd HD2SD
+    pip install -r requirements.txt
+    pyinstaller --noconfirm --onefile --windowed --add-data "%localappdata%/Programs/Python/Python311/Lib/site-packages/customtkinter;customtkinter/"  "main.py"
+    ```
