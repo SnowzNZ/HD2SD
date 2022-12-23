@@ -1,8 +1,12 @@
-import glob
-import customtkinter
-import threading
+"""
+Program to convert HD images to SD
+"""
 
-from tkinter import messagebox, filedialog
+import glob
+import threading
+from tkinter import filedialog, messagebox
+
+import customtkinter  # type: ignore
 from PIL import Image
 
 customtkinter.set_appearance_mode("System")
@@ -10,6 +14,7 @@ customtkinter.set_default_color_theme("blue")
 
 
 class App(customtkinter.CTk):
+    """GUI"""
 
     WIDTH = 350
     HEIGHT = 200
@@ -21,6 +26,7 @@ class App(customtkinter.CTk):
         self.geometry(f"{App.WIDTH}x{App.HEIGHT}")
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.resizable(False, False)
+        self.filename = None
 
         self.button_folder = customtkinter.CTkButton(
             master=self,
@@ -32,7 +38,9 @@ class App(customtkinter.CTk):
             command=self.select_folder,
             text_color_disabled="#000",
         )
-        self.button_folder.place(relx=0.5, rely=0.2, anchor=customtkinter.CENTER)
+        self.button_folder.place(
+            relx=0.5, rely=0.2, anchor=customtkinter.CENTER
+        )
 
         self.entry = customtkinter.CTkEntry(
             master=self, placeholder_text="", state="disabled", width=250
@@ -48,36 +56,42 @@ class App(customtkinter.CTk):
             text="Convert!",
             command=self.start_convert,
         )
-        self.button_convert.place(relx=0.5, rely=0.62, anchor=customtkinter.CENTER)
+        self.button_convert.place(
+            relx=0.5, rely=0.62, anchor=customtkinter.CENTER
+        )
         self.button_convert.configure(state="disabled")
 
         self.progressbar = customtkinter.CTkProgressBar(master=self, width=250)
-        self.progressbar.place(relx=0.5, rely=0.73, anchor=customtkinter.CENTER)
+        self.progressbar.place(
+            relx=0.5, rely=0.73, anchor=customtkinter.CENTER
+        )
         self.progressbar.set(0)
 
     def start_convert(self):
+        """Start the convert function"""
         threading.Thread(target=self.convert).start()
         self.progressbar.set(0)
 
     def convert(self):
-        n = 0
+        """Convert all @2x images to SD"""
+        images_converted = 0
         confirm = messagebox.askquestion(
             "HD2SD", "Are you sure you want to convert your HD files to SD?"
         )
         if confirm == "yes":
-            hd_images = glob.glob(rf"{filename}/*@2x.png")
+            hd_images = glob.glob(rf"{self.filename}/*@2x.png")
 
             for i in hd_images:
-                n += 1
-                progress = n / len(hd_images)
+                images_converted += 1
+                progress = images_converted / len(hd_images)
                 hd_image = Image.open(i)
-                x, y = hd_image.size
-                if x >= 2 and y >= 2:
-                    size = (x // 2, y // 2)
+                x_pos, y_pos = hd_image.size
+                if x_pos >= 2 and y_pos >= 2:
+                    size = (x_pos // 2, y_pos // 2)
                 else:
-                    size = (x, y)
+                    size = (x_pos, y_pos)
                 hd_image = hd_image.resize(size, Image.Resampling.LANCZOS)
-                name, suffix = i.split("@")
+                name = i.split("@")
                 hd_image.save(f"{name}.png")
                 self.progressbar.set(progress)
             messagebox.showinfo("HD2SD", "Conversion Complete!")
@@ -85,17 +99,18 @@ class App(customtkinter.CTk):
             pass
 
     def select_folder(self):
-        global filename
-        filename = filedialog.askdirectory()
+        """Choose folder to convert"""
+        self.filename = filedialog.askdirectory()
         self.button_convert.configure(state="normal")
         self.entry.configure(
-            state="normal", placeholder_text=filename.split("Skins/")[1]
+            state="normal", placeholder_text=self.filename.split("Skins/")[1]
         )
         self.entry.configure(state="disabled")
         self.button_folder.configure(text="Change Skin Folder")
         self.progressbar.set(0)
 
-    def on_closing(self, event=0):
+    def on_closing(self):
+        """Destroy window on close"""
         self.destroy()
 
 
