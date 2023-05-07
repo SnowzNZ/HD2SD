@@ -1,4 +1,2 @@
+tqdm
 pillow
-customtkinter
-tk
-types-Pillow
