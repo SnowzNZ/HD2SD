@@ -1,3 +1,7 @@
+"""
+Create SD images for osu! skins by downscaling HD images by 50%
+"""
+
 import glob
 import os
 from tkinter import filedialog
