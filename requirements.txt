@@ -1,2 +1,4 @@
 tqdm
 pillow
+pick
+readchar
