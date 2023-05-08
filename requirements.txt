@@ -1,4 +1,4 @@
+tqdm
 pillow
-customtkinter
-tk
-types-Pillow
+pick
+readchar
