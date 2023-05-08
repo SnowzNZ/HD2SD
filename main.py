@@ -59,7 +59,7 @@ if option == "Yes":
         if width > 1 and height > 1:
             size = (width // 2, height // 2)
         else:
-            break
+            continue
 
         # Resize the image
         hd_image = hd_image.resize(size, Image.Resampling.LANCZOS)
