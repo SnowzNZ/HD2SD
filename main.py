@@ -54,7 +54,8 @@ if option == "Yes":
         # Get the width and height of the image
         width, height = hd_image.size
 
-        # Check if the image is more than 1x1, if not break out of the for loop as 1/2 != a whole number
+        # Check if the image is more than 1x1
+        # If not, break out of the for loop as 1/2 != a whole number
         if width > 1 and height > 1:
             size = (width // 2, height // 2)
         else:
