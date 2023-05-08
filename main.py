@@ -4,18 +4,21 @@ Create SD images for osu! skins by downscaling HD images by 50%
 
 import glob
 import os
+import textwrap
 from tkinter import filedialog
 
+import readchar
+from pick import pick
 from PIL import Image
 from tqdm import tqdm
 
 print(
     """
-    ScaleX  Copyright (C) 2023  SnowzNZ
-    This program comes with ABSOLUTELY NO WARRANTY
-    This is free software, and you are welcome to redistribute it
-    under certain conditions
-    """
+HD2SD  Copyright (C) 2023  SnowzNZ
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions.
+"""
 )
 
 # Default location for osu! skins
@@ -27,23 +30,34 @@ if os.path.exists(default_skin_path):
 else:
     folder_path = filedialog.askdirectory()
 
-# Get every image in the folder
-for image in tqdm(
-    glob.glob(rf"{folder_path}/*@2x.png"),
-    desc="Downscaling images",
-    unit=" images",
-):
-    # Open the HD image
-    hd_image = Image.open(image)
+option, _ = pick(
+    ["Yes", "No"],
+    textwrap.fill(f"Selected Folder: {folder_path}")
+    + "\n\nAre you sure you wish to continue?",
+)
 
-    # Get the width and height of the image
-    width, height = hd_image.size
+if option == "Yes":
+    # Get every image in the folder
+    for image in tqdm(
+        glob.glob(rf"{folder_path}/*@2x.png"),
+        desc="Downscaling images",
+        unit=" images",
+    ):
+        # Open the HD image
+        hd_image = Image.open(image)
 
-    if width >= 2 and height >= 2:
-        size = (width // 2, height // 2)
-    else:
-        size = (width, height)
+        # Get the width and height of the image
+        width, height = hd_image.size
 
-    # Resize the image
-    hd_image = hd_image.resize(size, Image.Resampling.LANCZOS)
-    hd_image.save(image.replace("@2x", ""))
+        if width >= 2 and height >= 2:
+            size = (width // 2, height // 2)
+        else:
+            size = (width, height)
+
+        # Resize the image
+        hd_image = hd_image.resize(size, Image.Resampling.LANCZOS)
+        hd_image.save(image.replace("@2x", ""))
+
+if option == "No":
+    print("Press any key to exit...")
+    key = readchar.readkey()
