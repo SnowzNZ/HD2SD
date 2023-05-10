@@ -13,6 +13,10 @@ from pick import pick
 from PIL import Image
 from tqdm import tqdm
 
+scale_percentage = 0.50
+resample_algorithm = Image.Resampling.LANCZOS
+
+
 print(
     """
 HD2SD  Copyright (C) 2023  SnowzNZ
@@ -57,12 +61,12 @@ if option == "Yes":
         # Check if the image is more than 1x1
         # If not, break out of the for loop as 1/2 != a whole number
         if width > 1 and height > 1:
-            size = (width // 2, height // 2)
+            size = (width * scale_percentage, height * scale_percentage)
         else:
             continue
 
         # Resize the image
-        hd_image = hd_image.resize(size, Image.Resampling.LANCZOS)
+        hd_image = hd_image.resize(size, resample_algorithm)
         # Save the image as an SD image
         hd_image.save(image.replace("@2x", ""))
 
