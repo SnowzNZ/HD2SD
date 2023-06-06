@@ -8,8 +8,8 @@ import textwrap
 import time
 from tkinter import filedialog
 
-import readchar
-from pick import pick
+import readchar  # type: ignore
+from pick import pick  # type: ignore
 from PIL import Image
 from tqdm import tqdm
 
@@ -61,7 +61,10 @@ if option == "Yes":
         # Check if the image is more than 1x1
         # If not, break out of the for loop as 1/2 != a whole number
         if width > 1 and height > 1:
-            size = (width * scale_percentage, height * scale_percentage)
+            size = (
+                int(width * scale_percentage),
+                int(height * scale_percentage),
+            )
         else:
             continue
 
