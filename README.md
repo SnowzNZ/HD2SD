@@ -1,12 +1,14 @@
 # HD2SD
 
-Easily convert @2x (HD) images to SD.
+Convert @2x assets to SD with a click.
 
 ## Usage
+
 - Download the latest executable from [releases](https://github.com/SnowzNZ/HD2SD/releases/latest).
 - Run `HD2SD.exe`.
 
 #### Manual Installation
+
 ```sh
 git clone https://github.com/SnowzNZ/HD2SD
 cd HD2SD
@@ -17,4 +19,4 @@ py main.py
 
 ## License
 
-This project is licensed under the GPL-3.0 License - see the [LICENSE.md](./LICENSE.md) file for details
+This project is licensed under the GPL-3.0 License - see [LICENSE.md](./LICENSE.md) for more details.
