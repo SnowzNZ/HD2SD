@@ -30,11 +30,12 @@ jobs:
         
     - name: Build executable
       run: pyinstaller --noconfirm --onefile --console --name "HD2SD" "src/main.py"
-
-    - uses: actions/upload-artifact@v3
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
       with:
         name: HD2SD
-        path: HD2SD.exe
+        path: ./HD2SD.exe
 
     - name: Generate release tag
       id: tag
