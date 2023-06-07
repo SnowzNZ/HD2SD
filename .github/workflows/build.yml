@@ -27,12 +27,6 @@ jobs:
         
     - name: Build executable
       run: pyinstaller "src/main.py" --onefile --name "HD2SD" 
-      
-    - name: UPX GitHub Action
-      uses: crazy-max/ghaction-upx@v2.3.0
-      with:
-        args: --best --ultra-brute
-        file: dist\HD2SD.exe
     
     - name: Upload artifact
       uses: actions/upload-artifact@v3
