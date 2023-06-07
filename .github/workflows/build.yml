@@ -39,7 +39,7 @@ jobs:
       run: echo "release_tag=Nightly_$(date +"%Y.%m.%d_%H-%M")" >> $GITHUB_OUTPUT
 
     - name: Upload to release
-    - uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         fail_on_unmatched_files: true
