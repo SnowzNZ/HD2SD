@@ -7,6 +7,8 @@ Convert @2x assets to SD with a click.
 - Download the latest executable from [releases](https://github.com/SnowzNZ/HD2SD/releases/latest).
 - Run `HD2SD.exe`.
 
+You can get the latest dev build from [actions](https://github.com/SnowzNZ/HD2SD/actions).
+
 #### Manual Installation
 
 ```sh
