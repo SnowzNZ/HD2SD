@@ -6,12 +6,9 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
@@ -29,17 +26,17 @@ jobs:
         pip install -r requirements.txt
         
     - name: Build executable
-      run: pyinstaller --noconfirm --onefile --console --name "HD2SD" "src/main.py"
+      run: pyinstaller "src/main.py" --onefile --name "HD2SD" 
     
-#     - name: Upload artifact
-#       uses: actions/upload-artifact@v3
-#       with:
-#         name: HD2SD
-#         path: ./HD2SD.exe
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: HD2SD
+        path: dist\HD2SD.exe
 
     - name: Generate release tag
       id: tag
-      run: echo "::set-output name=release_tag::Nightly_$(date +"%Y.%m.%d_%H-%M")"
+      run: echo "release_tag=Nightly_$(date +"%Y.%m.%d_%H-%M")" >> $GITHUB_OUTPUT
 
     - name: Upload to release
       uses: softprops/action-gh-release@v1
